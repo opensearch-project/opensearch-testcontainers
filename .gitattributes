@@ -1,0 +1,5 @@
+* text   eol=lf
+*.jar    binary
+*.cmd    text eol=crlf
+*.sh     text eol=lf executable
+

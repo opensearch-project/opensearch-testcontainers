@@ -1,0 +1,25 @@
+# EditorConfig: http://editorconfig.org/
+
+root = true
+
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = space
+end_of_line = lf
+
+[*.java]
+indent_size = 4
+indent_style = space
+
+[*.xml]
+indent_size = 4
+indent_style = space
+
+[*.yml]
+indent_size = 2
+indent_style = space
+
+[*.cmd]
+end_of_line = crlf
