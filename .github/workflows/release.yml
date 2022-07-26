@@ -28,13 +28,13 @@ jobs:
         with:
           java-version: 11
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
       - name: Configure Git User
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
       - name: Release
-        run: mvn release:prepare release:perform -B -s .mvn/settings.xml -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}
+        run: gradle release -Prelease.releaseVersion=${{ github.event.inputs.releaseVersion }} -Prelease.newVersion=${{ github.event.inputs.developmentVersion }}
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

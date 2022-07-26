@@ -92,11 +92,14 @@ class OpensearchContainerTest {
     private static Stream<Arguments> containers() {
         return Stream.of(
                 Arguments.of(
-                        "1.3.2",
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("1.3.2")),
+                        "1.3.4",
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("1.3.4")),
                 Arguments.of(
-                        "2.0.0",
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.0.0")));
+                        "2.0.1",
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.0.1")),
+                Arguments.of(
+                        "2.1.0",
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.1.0")));
     }
 
     private RestClient getClient(OpensearchContainer container)
