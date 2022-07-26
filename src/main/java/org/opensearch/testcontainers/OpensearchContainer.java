@@ -105,7 +105,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
         final WaitStrategy waitStrategy;
         if (useHttps) {
             // By default, Opensearch uses self-signed certificates for HTTPS, allowing insecure
-            // connection in order to slip the certificate validation checks.
+            // connection in order to skip the certificate validation checks.
             waitStrategy = new HttpWaitStrategy()
                     .usingTls()
                     .allowInsecure()
