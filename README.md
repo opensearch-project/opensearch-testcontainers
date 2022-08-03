@@ -1,10 +1,10 @@
 opensearch-testcontainers
 ======================
-A [testcontainers](https://www.testcontainers.org/) integration for [OpenSearch](https://opensearch.org/).
+A [Testcontainers](https://www.testcontainers.org/) integration for [OpenSearch](https://opensearch.org/).
 
 ## Overview
 
-The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch-testcontainers) delivers idiomatic integration of the [OpenSearch](https://opensearch.org/) Docker containers with [testcontainers](https://www.testcontainers.org/) test scaffolding, since the out-of-the box support has been [rulled out](https://github.com/testcontainers/testcontainers-java/issues/4782) by maintainers.
+The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch-testcontainers) delivers idiomatic integration of the [OpenSearch](https://opensearch.org/) Docker containers with [Testcontainers](https://www.testcontainers.org/) test scaffolding, since the out-of-the box support has been [ruled out](https://github.com/testcontainers/testcontainers-java/issues/4782) by maintainers for the time being.
 
 ## Testcontainers and OpenSearch Compatibility
 
@@ -139,6 +139,10 @@ Please note that the project explicitly does not require a CLA (Contributor Lice
 
 Copyright OpenSearch Contributors. See [NOTICE](NOTICE.txt) for details.
 
+## Security
+
+To report any possible vulnerabilities or other serious issues please see our [security](SECURITY.md) policy or refer to [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
 ## Contributing
 
-Bug reports and patches are very welcome, please post them as GitHub issues and pull requests at `https://github.com/opensearch-project/opensearch-testcontainers`. Please check ouyt [CONTRIBUTING](CONTRIBUTING.md) for more information.
+Bug reports and patches are very welcome, please post them as GitHub issues and pull requests at `https://github.com/opensearch-project/opensearch-testcontainers`. Please check out [CONTRIBUTING](CONTRIBUTING.md) for more information.

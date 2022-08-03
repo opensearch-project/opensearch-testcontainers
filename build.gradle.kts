@@ -18,10 +18,10 @@
 import net.researchgate.release.ReleaseExtension
 
 plugins {
-  `java`
+  java
   `maven-publish`
-  `eclipse`
-  `idea`
+  eclipse
+  idea
   id("org.ec4j.editorconfig") version "0.0.3"
   id("com.diffplug.spotless") version "6.8.0"
 }
@@ -51,10 +51,7 @@ repositories {
 }
 
 dependencies {
-  implementation("org.testcontainers:testcontainers:1.17.3")
-  // See please https://github.com/testcontainers/testcontainers-java/issues/970
-  compileOnly("junit:junit:4.13.2")
-
+  implementation("org.testcontainers:testcontainers:1.17.3") 
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
   testImplementation("ch.qos.logback:logback-classic:1.2.11")

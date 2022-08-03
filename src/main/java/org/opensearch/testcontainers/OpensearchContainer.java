@@ -42,7 +42,6 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     private static final int DEFAULT_HTTP_PORT = 9200;
 
     // Default TCP port (deprecated and may be removed in future versions).
-    @Deprecated
     private static final int DEFAULT_TCP_PORT = 9300;
 
     // Opensearch Docker base image.
