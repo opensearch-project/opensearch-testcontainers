@@ -50,7 +50,7 @@ Please note that at the moment [testcontainers](https://www.testcontainers.org/)
 
 ## Usage Examples
 
-By default, [OpenSearch](https://opensearch.org/) Docker containers run with [security plugin](https://github.com/opensearch-project/security) activated. In order to connect to the running container the HTTPS protocol should be used along with username / password credentials.
+By default, [OpenSearch](https://opensearch.org/) Docker containers run with [security plugin](https://github.com/opensearch-project/security) activated, however `OpensearchContainer` deactivates it. Use `withSecurityEnabled()` to enable security, please notice that in this case in order to connect to the running container the HTTPS protocol should be used along with username / password credentials.
 
 ```java
 
@@ -69,7 +69,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
 
 // Create the Opensearch container.
-try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE)) {
+try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE).withSecurityEnabled()) {
     // Start the container. This step might take some time...
     container.start();
 
@@ -100,7 +100,7 @@ try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE)) 
 }
 ```
 
-When [security plugin](https://github.com/opensearch-project/security) is not required, it could be deactivated (not recommended for production).
+When [security plugin](https://github.com/opensearch-project/security) is not required (not recommended for production), just use `OpensearchContainer` default constructor.
 
 ```java
 
@@ -112,7 +112,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
 
 // Create the OpenSearch container.
-try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE, true)) {
+try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE)) {
     // Start the container. This step might take some time...
     container.start();
 

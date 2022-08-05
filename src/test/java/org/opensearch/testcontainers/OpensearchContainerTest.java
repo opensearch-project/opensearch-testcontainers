@@ -39,7 +39,7 @@ class OpensearchContainerTest {
     @ParameterizedTest(name = "Running Opensearch version={0} (security enabled)")
     @MethodSource("containers")
     public void defaultWithSecurity(final String version, final DockerImageName image) throws Exception {
-        try (OpensearchContainer container = new OpensearchContainer(image)) {
+        try (OpensearchContainer container = new OpensearchContainer(image).withSecurityEnabled()) {
             container.start();
 
             try (RestClient client = getClient(container)) {
@@ -60,7 +60,7 @@ class OpensearchContainerTest {
     @ParameterizedTest(name = "Running Opensearch version={0} (security disabled)")
     @MethodSource("containers")
     public void defaultNoSecurity(final String version, final DockerImageName image) throws Exception {
-        try (OpensearchContainer container = new OpensearchContainer(image, true)) {
+        try (OpensearchContainer container = new OpensearchContainer(image)) {
             container.start();
 
             try (RestClient client = getClient(container)) {

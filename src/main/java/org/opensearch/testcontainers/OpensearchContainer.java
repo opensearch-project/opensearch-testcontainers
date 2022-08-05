@@ -35,8 +35,9 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     // Opensearch Docker base image.
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("opensearchproject/opensearch");
 
-    // Use HTTP or HTTPs endpoint
-    private final boolean useHttps;
+    // Disables (or enables) security plugin. If security is enabled, the communication protocol switches from HTTP to HTTPs,
+    // along with Basic Auth being used.
+    private boolean disableSecurity = true;
 
     /**
      * Create an Opensearch Container by passing the full docker image name.
@@ -61,27 +62,23 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      *
      */
     public OpensearchContainer(final DockerImageName dockerImageName) {
-        this(dockerImageName, false);
-    }
+        super(dockerImageName);
+        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);    }
 
     /**
-     * Create an Opensearch Container by passing the full docker image name.
-     *
-     * @param dockerImageName Full docker image name as a {@link DockerImageName}, like:
-     *
-     *    DockerImageName.parse("opensearchproject/opensearch:1.2.4")
-     *    DockerImageName.parse("opensearchproject/opensearch:1.3.1")
-     *    DockerImageName.parse("opensearchproject/opensearch:2.0.0")
-     *
-     * @param disableSecurity Should the security plugin be enabled or disabled. If the security
-     *     plugin is enabled, HTTPS protocol is going to be used along with the default username /
-     *     password.
+     * Should the security plugin be enabled or stay disabled (default value). If the security
+     * plugin is enabled, HTTPS protocol is going to be used along with the default username / password.
      */
-    public OpensearchContainer(final DockerImageName dockerImageName, boolean disableSecurity) {
-        super(dockerImageName);
-        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
-        this.useHttps = !disableSecurity;
+    public OpensearchContainer withSecurityEnabled() {
+        this.disableSecurity = false;
+        return this;
 
+    }
+    
+    @Override
+    protected void configure() {
+    	super.configure();
+    	
         withNetworkAliases("opensearch-" + Base58.randomString(6));
         withEnv("discovery.type", "single-node");
         if (disableSecurity) {
@@ -90,7 +87,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
         addExposedPorts(DEFAULT_HTTP_PORT, DEFAULT_TCP_PORT);
 
         final WaitStrategy waitStrategy;
-        if (useHttps) {
+        if (!disableSecurity) {
             // By default, Opensearch uses self-signed certificates for HTTPS, allowing insecure
             // connection in order to skip the certificate validation checks.
             waitStrategy = new HttpWaitStrategy()
@@ -118,7 +115,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      * @return HTTP(s) host and port (in a form of "host:port")
      */
     public String getHttpHostAddress() {
-        return (useHttps ? "https://" : "http://") + getHost() + ":" + getMappedPort(DEFAULT_HTTP_PORT);
+        return (disableSecurity ? "http://" : "https://") + getHost() + ":" + getMappedPort(DEFAULT_HTTP_PORT);
     }
 
     /**
@@ -127,7 +124,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      * @return "true" if if security plugin was enabled for this container, "false" otherwise
      */
     public boolean isSecurityEnabled() {
-        return useHttps;
+        return !disableSecurity;
     }
 
     /**
