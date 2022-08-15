@@ -35,7 +35,8 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     // Opensearch Docker base image.
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("opensearchproject/opensearch");
 
-    // Disables (or enables) security plugin. If security is enabled, the communication protocol switches from HTTP to HTTPs,
+    // Disables (or enables) security plugin. If security is enabled, the communication protocol switches from HTTP to
+    // HTTPs,
     // along with Basic Auth being used.
     private boolean disableSecurity = true;
 
@@ -63,7 +64,8 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      */
     public OpensearchContainer(final DockerImageName dockerImageName) {
         super(dockerImageName);
-        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);    }
+        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
+    }
 
     /**
      * Should the security plugin be enabled or stay disabled (default value). If the security
@@ -72,13 +74,12 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     public OpensearchContainer withSecurityEnabled() {
         this.disableSecurity = false;
         return this;
-
     }
-    
+
     @Override
     protected void configure() {
-    	super.configure();
-    	
+        super.configure();
+
         withNetworkAliases("opensearch-" + Base58.randomString(6));
         withEnv("discovery.type", "single-node");
         if (disableSecurity) {
