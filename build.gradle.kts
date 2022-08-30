@@ -11,7 +11,7 @@ plugins {
   eclipse
   idea
   id("org.ec4j.editorconfig") version "0.0.3"
-  id("com.diffplug.spotless") version "6.9.1"
+  id("com.diffplug.spotless") version "6.10.0"
 }
 
 buildscript {
