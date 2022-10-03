@@ -22,7 +22,7 @@ buildscript {
   }
   dependencies {
     classpath("gradle.plugin.org.ec4j.gradle:editorconfig-gradle-plugin:0.0.3")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.10.0")
+    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.11.0")
     classpath("net.researchgate:gradle-release:3.0.2")
   }
 }
