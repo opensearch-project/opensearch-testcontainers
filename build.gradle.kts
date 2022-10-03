@@ -11,7 +11,7 @@ plugins {
   eclipse
   idea
   id("org.ec4j.editorconfig") version "0.0.3"
-  id("com.diffplug.spotless") version "6.10.0"
+  id("com.diffplug.spotless") version "6.11.0"
 }
 
 buildscript {
@@ -22,7 +22,7 @@ buildscript {
   }
   dependencies {
     classpath("gradle.plugin.org.ec4j.gradle:editorconfig-gradle-plugin:0.0.3")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.10.0")
+    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.11.0")
     classpath("net.researchgate:gradle-release:3.0.2")
   }
 }
@@ -39,11 +39,11 @@ repositories {
 }
 
 dependencies {
-  implementation("org.testcontainers:testcontainers:1.17.3") 
+  implementation("org.testcontainers:testcontainers:1.17.4") 
   testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
-  testImplementation("ch.qos.logback:logback-classic:1.2.11")
-  testImplementation("org.opensearch.client:opensearch-rest-client:2.2.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
+  testImplementation("ch.qos.logback:logback-classic:1.4.3")
+  testImplementation("org.opensearch.client:opensearch-rest-client:2.3.0")
 }
 
 group = "org.opensearch"
