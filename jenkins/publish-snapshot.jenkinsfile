@@ -20,6 +20,18 @@ pipeline {
             regexpFilterExpression: '^(refs/heads/main)$'
         )
     }
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        throttleJobProperty(
+            categories: [],
+            limitOneJobWithMatchingParams: false,
+            maxConcurrentPerNode: 0,
+            maxConcurrentTotal: 1,
+            paramsToUseForLimit: '',
+            throttleEnabled: true,
+            throttleOption: 'project',
+        )
+    }
     stages {
         stage('Publish to Sonatype Snapshots Repo') {
             steps {

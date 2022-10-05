@@ -25,6 +25,18 @@ pipeline {
             regexpFilterText: '$ref',
             regexpFilterExpression: '^refs/tags/.*'
         )
+    }    
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        throttleJobProperty(
+            categories: [],
+            limitOneJobWithMatchingParams: false,
+            maxConcurrentPerNode: 0,
+            maxConcurrentTotal: 1,
+            paramsToUseForLimit: '',
+            throttleEnabled: true,
+            throttleOption: 'project',
+        )
     }
     environment {
         ARTIFACT_PATH = "$WORKSPACE/build/repository/org/opensearch/opensearch-testcontainers/$VERSION"
