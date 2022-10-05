@@ -91,3 +91,48 @@ configure<ReleaseExtension> {
     requireBranch.set("main")
   }
 }
+
+publishing {
+  repositories{
+    if (version.toString().endsWith("SNAPSHOT")) {
+      maven("https://aws.oss.sonatype.org/content/repositories/snapshots/") {
+        name = "snapshotRepo"
+        credentials(PasswordCredentials::class)
+      }
+    }
+    maven("${rootProject.buildDir}/repository") {
+      name = "localRepo"
+    }
+  }
+
+publications {
+  create<MavenPublication>("publishMaven") {
+    from(components["java"])
+      pom {
+        name.set("OpenSearch Testcontainers integration")
+        packaging = "jar"
+        artifactId = "opensearch-testcontainers"
+        description.set("OpenSearch Testcontainers integration")
+        url.set("https://github.com/opensearch-project/opensearch-testcontainers/")
+        scm {
+          connection.set("scm:git@github.com:opensearch-project/opensearch-testcontainers.git")
+          developerConnection.set("scm:git@github.com:opensearch-project/opensearch-testcontainers.git")
+          url.set("git@github.com:opensearch-project/opensearch-testcontainers.git")
+        }
+        licenses {
+          license {
+            name.set("The Apache License, Version 2.0")
+            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+          }
+        }
+        developers {
+          developer {
+            name.set("opensearch-project")
+            url.set("https://www.opensearch.org")
+            inceptionYear.set("2022")
+          }
+        }
+      }
+    }
+  }
+}
