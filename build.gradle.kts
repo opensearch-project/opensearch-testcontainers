@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-  implementation("org.testcontainers:testcontainers:1.17.4") 
+  implementation("org.testcontainers:testcontainers:1.17.5") 
   testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
   testImplementation("ch.qos.logback:logback-classic:1.2.11")
