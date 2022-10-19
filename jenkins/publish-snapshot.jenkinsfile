@@ -28,17 +28,9 @@ pipeline {
         )
     }
     triggers {
-        GenericTrigger(
-            genericVariables: [
-                [key: 'ref', value: '$.ref'],
-            ],
-            tokenCredentialId: 'jenkins-opensearch-testcontainers-generic-webhook-token',
-            causeString: 'A commit was pushed on opensearch-project/testcontainers-opensearch repository main branch causing this workflow to run',
-            printContributedVariables: false,
-            printPostContent: false,
-            regexpFilterText: '$ref',
-            regexpFilterExpression: '^(release)/[0-9]+$'
-        )
+        parameterizedCron '''
+            H 1 * * * %GIT_REFERENCE=main
+        '''
     }
     environment {
         REPO_URL="https://github.com/opensearch-project/testcontainers"
