@@ -64,7 +64,9 @@ pipeline {
                     }
 
                     echo("Git checkout ${REPO_URL} on ${ref_final} for testcontainers release")
-                    checkout([$class: 'GitSCM', branches: [[name: "${ref_final}" ]], userRemoteConfigs: [[url: "${REPO_URL}" ]]])
+                    //checkout([$class: 'GitSCM', branches: [[name: "${ref_final}" ]], userRemoteConfigs: [[url: "${REPO_URL}" ]]])
+                    checkout scm
+                    sh("git checkout ${ref_final}")
 
                     // https://docs.gradle.org/current/samples/sample_publishing_credentials.html
                     // https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties
