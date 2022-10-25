@@ -44,17 +44,9 @@ pipeline {
                     println('Start Trigger')
                     def ref_final = "${GIT_REFERENCE}"
                     def ref_url = "${REPO_URL}/commit/${GIT_REFERENCE}"
-                    if (env.USER_BUILD_CAUSE.equals('[]') && env.TIMER_BUILD_CAUSE.equals('[]')) {
-                        ref_final = "${ref}"
-                        ref_url = "${REPO_URL}/releases/tag/${ref}"
-                        println("Triggered by GitHub: ${ref_url}")
-
-                        currentBuild.description = """GitHub: <a href="${ref_url}">${ref_url}</a>"""
-                    }
-                    else {
-                        println("Triggered by User/Timer: ${ref_url}")
-                        currentBuild.description = """User/Timer: <a href="${ref_url}">${ref_url}</a>"""
-                    }
+                    
+                    println("Triggered by User/Timer: ${ref_url}")
+                    currentBuild.description = """User/Timer: <a href="${ref_url}">${ref_url}</a>"""
 
                     if (ref_final == null || ref_final == '') {
                         currentBuild.result = 'ABORTED'
