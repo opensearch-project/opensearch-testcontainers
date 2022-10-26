@@ -31,7 +31,7 @@ pipeline {
             ],
             tokenCredentialId: 'jenkins-opensearch-testcontainers-generic-webhook-token',
             causeString: 'A tag was cut on opensearch-project/opensearch-testcontainers repository causing this workflow to run',
-            printContributedVariables: true,
+            printContributedVariables: false,
             printPostContent: false,
             regexpFilterText: '$ref',
             regexpFilterExpression: '^(release)-[0-9.]+'
