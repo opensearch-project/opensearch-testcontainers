@@ -47,7 +47,12 @@ dependencies {
 }
 
 group = "org.opensearch"
-version = "2.0.0-SNAPSHOT"
+var isSnapshot = "true" == System.getProperty("build.snapshot", "true")
+var version_temp = "2.0.0"
+if (isSnapshot) {
+    version_temp += "-SNAPSHOT"
+}
+version = version_temp
 description = "Testcontainers for Opensearch"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
