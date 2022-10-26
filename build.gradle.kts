@@ -48,7 +48,7 @@ dependencies {
 
 group = "org.opensearch"
 var isSnapshot = "true" == System.getProperty("build.snapshot", "true")
-var version_temp = "2.0.0"
+var version_temp = "2.0.1"
 if (isSnapshot) {
     version_temp += "-SNAPSHOT"
 }
