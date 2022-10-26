@@ -70,6 +70,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     /**
      * Should the security plugin be enabled or stay disabled (default value). If the security
      * plugin is enabled, HTTPS protocol is going to be used along with the default username / password.
+     * @return this container instance
      */
     public OpensearchContainer withSecurityEnabled() {
         this.disableSecurity = false;
