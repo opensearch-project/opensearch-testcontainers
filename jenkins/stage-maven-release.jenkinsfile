@@ -84,7 +84,6 @@ pipeline {
 
                     // publish maven artifacts
                     sh('./gradlew --no-daemon -Dbuild.snapshot=false publishPublishMavenPublicationToLocalRepoRepository')
-                    sh('echo exit1 && exit 1')
                 }
             }
         }
