@@ -46,7 +46,7 @@ pipeline {
         )
     }
     environment {
-        REPO_URL="https://github.com/opensearch-project/testcontainers"
+        REPO_URL="https://github.com/opensearch-project/opensearch-testcontainers"
         ARTIFACT_PATH = "$WORKSPACE/build/repository/org/opensearch/opensearch-testcontainers"
         USER_BUILD_CAUSE = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
         TIMER_BUILD_CAUSE = currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause')
