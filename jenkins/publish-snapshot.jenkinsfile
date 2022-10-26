@@ -57,8 +57,10 @@ pipeline {
                     // https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties
                     withCredentials([usernamePassword(credentialsId: 'jenkins-sonatype-creds', usernameVariable: 'ORG_GRADLE_PROJECT_snapshotRepoUsername', passwordVariable: 'ORG_GRADLE_PROJECT_snapshotRepoPassword')]) {
                         echo("Git checkout ${REPO_URL} on ${ref_final} for testcontainers release")
-                        checkout scm
-                        sh("git checkout ${ref_final}")
+                        checkout([
+                            $class: 'GitSCM', userRemoteConfigs: [[url: "${REPO_URL}" ]],
+                            branches: [[name: "${ref_final}"]]
+                        ])
                         sh('./gradlew --no-daemon publishPublishMavenPublicationToSnapshotRepoRepository')
                     }
                 }
