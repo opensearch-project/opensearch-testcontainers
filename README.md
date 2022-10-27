@@ -10,8 +10,9 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 
 |opensearch-testcontainers|OpenSearch|testcontainers|JDK|
 |---|---|---|---|
-|2.0.0-SNAPSHOT|2.0.0+|1.17.2+|11+|
-|2.0.0-SNAPSHOT|1.3.2+|1.17.2+|11+|
+|2.0.1-SNAPSHOT|2.0.0+|1.17.2+|11+|
+|2.0.0|2.0.0+|1.17.2+|11+|
+|2.0.0|1.3.2+|1.17.2+|11+|
 |1.0.0-SNAPSHOT|1.3.2+|1.17.2+|8+|
 
 ## Usage
@@ -19,8 +20,9 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 ```xml
 <dependency>
     <groupId>org.opensearch</groupId>
-    <artifactId>testcontainers-opensearch</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <artifactId>opensearch-testcontainers</artifactId>
+    <version>2.0.0</version>
+    <scope>test</scope>
 </dependency>
 ```
 
