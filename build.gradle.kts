@@ -56,19 +56,20 @@ val build = Properties().apply {
 
 // Detect version from version.properties and align it with the build settings
 var isSnapshot = "true" == System.getProperty("build.snapshot", "true")
-val version = build.getProperty("version")
-if (isSnapshot && !version.endsWith("SNAPSHOT")) {
-  throw GradleException("Expecting SNAPSHOT build but version is not set accordingly: " + version)
-} else if (!isSnapshot && version.endsWith("SNAPSHOT")) {
-  throw GradleException("Expecting release (non-SNAPSHOT) build but version is not set accordingly: " + version)
+var buildVersion = build.getProperty("version")
+if (isSnapshot && !buildVersion.endsWith("SNAPSHOT")) {
+  buildVersion = buildVersion + "-SNAPSHOT"
+} else if (!isSnapshot && buildVersion.endsWith("SNAPSHOT")) {
+  throw GradleException("Expecting release (non-SNAPSHOT) build but version is not set accordingly: " + buildVersion)
 }
-
+  
 // Check if tag release version (if provided) matches the version from build settings 
-val tagVersion = System.getProperty("build.version", version)
-if (!version.equals(tagVersion)) {
-  throw GradleException("The tagged version " + tagVersion + " does not match the build version " + version)
+val tagVersion = System.getProperty("build.version", buildVersion)
+if (!buildVersion.equals(tagVersion)) {
+  throw GradleException("The tagged version " + tagVersion + " does not match the build version " + buildVersion)
 }
 
+version = buildVersion 
 description = "Testcontainers for Opensearch"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
