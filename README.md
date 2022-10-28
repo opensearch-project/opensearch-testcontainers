@@ -21,7 +21,7 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 <dependency>
     <groupId>org.opensearch</groupId>
     <artifactId>opensearch-testcontainers</artifactId>
-    <version>2.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
