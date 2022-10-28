@@ -13,7 +13,8 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 |2.0.1-SNAPSHOT|2.0.0+|1.17.2+|11+|
 |2.0.0|2.0.0+|1.17.2+|11+|
 |2.0.0|1.3.2+|1.17.2+|11+|
-|1.0.0-SNAPSHOT|1.3.2+|1.17.2+|8+|
+|1.0.1-SNAPSHOT|1.3.2+|1.17.2+|8+|
+|1.0.0|1.3.2+|1.17.2+|8+|
 
 ## Usage
 
