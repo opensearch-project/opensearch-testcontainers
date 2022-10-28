@@ -30,6 +30,7 @@ pipeline {
     triggers {
         parameterizedCron '''
             H 1 * * * %GIT_REFERENCE=main
+            H 1 * * * %GIT_REFERENCE=1.x
         '''
     }
     environment {
