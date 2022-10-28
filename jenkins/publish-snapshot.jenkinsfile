@@ -23,13 +23,13 @@ pipeline {
         string(
             name: 'GIT_REFERENCE',
             description: 'Git branch, tag, commitid for reference to checkout commit of OpenSearch core before running the gradle check.',
-            defaultValue: 'main',
+            defaultValue: '1.x',
             trim: true
         )
     }
     triggers {
         parameterizedCron '''
-            H 1 * * * %GIT_REFERENCE=main
+            H 1 * * * %GIT_REFERENCE=1.x
         '''
     }
     environment {
