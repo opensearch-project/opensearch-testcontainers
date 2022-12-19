@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -25,6 +26,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -75,6 +77,13 @@ class OpensearchContainerTest {
                         () -> client.performRequest(new Request("GET", "/_plugins/_security/health")));
             }
         }
+    }
+
+    @Test
+    void ecrImageIsCompatibleWithDefaultDockerHubImage() {
+        assertDoesNotThrow(() -> {
+            new OpensearchContainer("public.ecr.aws/opensearchproject/opensearch");
+        });
     }
 
     private static Stream<Arguments> containers() {

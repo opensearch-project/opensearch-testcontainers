@@ -35,6 +35,10 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
     // Opensearch Docker base image.
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("opensearchproject/opensearch");
 
+    // Opensearch Docker base image hosted on Amazon ECR
+    private static final DockerImageName ECR_IMAGE_NAME =
+            DockerImageName.parse("public.ecr.aws/opensearchproject/opensearch");
+
     // Disables (or enables) security plugin. If security is enabled, the communication protocol switches from HTTP to
     // HTTPs,
     // along with Basic Auth being used.
@@ -45,7 +49,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      *
      * @param dockerImageName Full docker image name as a {@link String}, like:
      *     opensearchproject/opensearch:1.2.4 opensearchproject/opensearch:1.3.1
-     *     opensearchproject/opensearch:2.0.0
+     *     opensearchproject/opensearch:2.0.0 or public.ecr.aws/opensearchproject/opensearch:2.4.1
      */
     public OpensearchContainer(String dockerImageName) {
         this(DockerImageName.parse(dockerImageName));
@@ -64,7 +68,7 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      */
     public OpensearchContainer(final DockerImageName dockerImageName) {
         super(dockerImageName);
-        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
+        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME, ECR_IMAGE_NAME);
     }
 
     /**
