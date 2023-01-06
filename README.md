@@ -35,7 +35,7 @@ Follow the [JUnit 4 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Rule
-public OpensearchContainer opensearch = new OpensearchContainer(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
+public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
 
 ```
 
@@ -45,7 +45,7 @@ Follow the [JUnit 5 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Container
-public OpensearchContainer opensearch = new OpensearchContainer(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
+public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
 
 ```
 
@@ -72,7 +72,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
 
 // Create the Opensearch container.
-try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE).withSecurityEnabled()) {
+try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE).withSecurityEnabled()) {
     // Start the container. This step might take some time...
     container.start();
 
@@ -115,7 +115,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
 
 // Create the OpenSearch container.
-try (OpensearchContainer container = new OpensearchContainer(OPENSEARCH_IMAGE)) {
+try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE)) {
     // Start the container. This step might take some time...
     container.start();
 

@@ -20,7 +20,7 @@ import org.testcontainers.utility.DockerImageName;
  * The Opensearch Docker container (single node cluster) which exposes by default ports 9200
  * (http/https) and 9300 (tcp, deprecated).
  */
-public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
+public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends GenericContainer<SELF> {
     // Default username to connect to Opensearch instance
     private static final String DEFAULT_USER = "admin";
     // Default password to connect to Opensearch instance
@@ -72,9 +72,9 @@ public class OpensearchContainer extends GenericContainer<OpensearchContainer> {
      * plugin is enabled, HTTPS protocol is going to be used along with the default username / password.
      * @return this container instance
      */
-    public OpensearchContainer withSecurityEnabled() {
+    public SELF withSecurityEnabled() {
         this.disableSecurity = false;
-        return this;
+        return self();
     }
 
     @Override
