@@ -119,7 +119,10 @@ publishing {
     if (version.toString().endsWith("SNAPSHOT")) {
       maven("https://aws.oss.sonatype.org/content/repositories/snapshots/") {
         name = "snapshotRepo"
-        credentials(PasswordCredentials::class)
+        credentials {
+            username = System.getenv("SONATYPE_USERNAME")
+            password = System.getenv("SONATYPE_PASSWORD")
+        }
       }
     }
     maven("${rootProject.buildDir}/repository") {
