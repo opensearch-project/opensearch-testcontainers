@@ -4,7 +4,8 @@ This document contains a list of maintainers in this repo. See [opensearch-proje
 
 ## Current Maintainers
 
-| Maintainer               | GitHub ID                           | Affiliation |
-| ------------------------ | ----------------------------------- | ----------- |
-| Andriy Redko             | [reta](https://github.com/reta)     | Aiven       |
-| Daniel "dB." Doubrovkine | [dblock](https://github.com/dblock) | Amazon      |
+| Maintainer               | GitHub ID                                           | Affiliation |
+| ------------------------ | --------------------------------------------------- | ----------- |
+| Andriy Redko             | [reta](https://github.com/reta)                     | Aiven       |
+| Daniel "dB." Doubrovkine | [dblock](https://github.com/dblock)                 | Amazon      |
+| Peter Zhu                | [peterzhuamazon](https://github.com/peterzhuamazon) | Amazon      |
