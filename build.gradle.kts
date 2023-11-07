@@ -111,6 +111,7 @@ spotless {
 configure<ReleaseExtension> {
   with(git) {
     requireBranch.set("main")
+    versionPropertyFile.set("version.properties")
   }
 }
 
