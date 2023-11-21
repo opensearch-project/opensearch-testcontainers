@@ -10,7 +10,8 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 
 |opensearch-testcontainers|OpenSearch|testcontainers|JDK|
 |---|---|---|---|
-|2.0.1-SNAPSHOT|2.0.0+|1.17.2+|11+|
+|2.0.2-SNAPSHOT|2.0.0+|1.17.2+|11+|
+|2.0.1|2.0.0+|1.19.2+|11+|
 |2.0.0|2.0.0+|1.17.2+|11+|
 |2.0.0|1.3.2+|1.17.2+|11+|
 |1.0.1-SNAPSHOT|1.3.2+|1.17.2+|8+|
@@ -22,7 +23,7 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 <dependency>
     <groupId>org.opensearch</groupId>
     <artifactId>opensearch-testcontainers</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -35,7 +36,7 @@ Follow the [JUnit 4 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Rule
-public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
+public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
 
 ```
 
@@ -45,7 +46,7 @@ Follow the [JUnit 5 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Container
-public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.0.0"));
+public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
 
 ```
 
@@ -69,7 +70,7 @@ import org.opensearch.client.Request;
 import org.opensearch.client.Response;
 import org.opensearch.client.RestClient;
 
-private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
+private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.11.0");
 
 // Create the Opensearch container.
 try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE).withSecurityEnabled()) {
@@ -112,7 +113,7 @@ import org.opensearch.client.Request;
 import org.opensearch.client.Response;
 import org.opensearch.client.RestClient;
 
-private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.0.0");
+private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.11.0");
 
 // Create the OpenSearch container.
 try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE)) {
