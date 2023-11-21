@@ -36,10 +36,9 @@ The release process is standard across repositories in this org and is run by a 
 
 1. Create a tag, e.g. 1.0.0, and push it to this GitHub repository.
 1. The [release-drafter.yml](.github/workflows/release-drafter.yml) will be automatically kicked off. This workflow creates a GitHub issue asking for approval from the [maintainers](MAINTAINERS.md) (see sample [issue](https://github.com/opensearch-project/opensearch-java/issues/733)). The maintainers need to approve in order to continue the workflow run and draft release creation.
-
 1. This draft release triggers the [jenkins release workflow](https://build.ci.opensearch.org/job/opensearch-testcontainers-release) as a result of which the client is released on [maven central](https://central.sonatype.com/artifact/org.opensearch/opensearch-testcontainers). Please note that the release workflow is triggered only if created release is in draft state.
 1. Once the above release workflow is successful, the drafted release on GitHub is published automatically.
 1. Increment "version" in [version.properties](./version.properties) to the next iteration, e.g. v2.1.1. See [example](https://github.com/opensearch-project/opensearch-testcontainers/pull/39).
 
 ## Snapshot Builds
-The [snapshots builds](https://aws.oss.sonatype.org/content/repositories/snapshots/org/opensearch/opensearch-testcontainers/) are published to sonatype using [publish-snapshots.yml](./.github/workflows/publish-snapshots.yml) workflow. Each `push` event to the main branch triggers this workflow.
+The [snapshots builds](https://aws.oss.sonatype.org/content/repositories/snapshots/org/opensearch/opensearch-testcontainers/) are published to sonatype using [publish-snapshots.yml](./.github/workflows/publish-snapshots.yml) workflow. Each `push` event to the main branch (or other active release branch like `1.x`) triggers this workflow.
