@@ -13,7 +13,7 @@ plugins {
   `maven-publish`
   eclipse
   idea
-  id("org.ec4j.editorconfig") version "0.0.3"
+  id("org.ec4j.editorconfig") version "0.1.0"
   id("com.diffplug.spotless") version "6.25.0"
 }
 
