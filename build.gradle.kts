@@ -43,8 +43,8 @@ repositories {
 
 dependencies {
   implementation("org.testcontainers:testcontainers:1.19.8") 
-  testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
   testImplementation("ch.qos.logback:logback-classic:1.5.6")
   testImplementation("org.opensearch.client:opensearch-rest-client:2.15.0")
 }
