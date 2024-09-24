@@ -10,6 +10,7 @@ import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
+import java.util.regex.Pattern;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.containers.wait.strategy.WaitStrategy;
@@ -21,10 +22,16 @@ import org.testcontainers.utility.DockerImageName;
  * (http/https) and 9300 (tcp, deprecated).
  */
 public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends GenericContainer<SELF> {
+    // The initial password is required starting from OpenSearch 2.12.0
+    private static final Pattern OPENSEARCH_INITIAL_PASSWORD_VERSION = Pattern.compile(
+            "^(([3-9][.]\\d+[.]\\d+|[2][.][1][2-9]+[.]\\d+|[2][.][2-9]\\d+[.]\\d+)(-SNAPSHOT)?|latest)$");
+
     // Default username to connect to Opensearch instance
     private static final String DEFAULT_USER = "admin";
     // Default password to connect to Opensearch instance
     private static final String DEFAULT_PASSWORD = "admin";
+    // Default initial password to connect to Opensearch instance
+    private static final String DEFAULT_INITIAL_PASSWORD = "_ad0m#Ns_";
 
     // Default HTTP port.
     private static final int DEFAULT_HTTP_PORT = 9200;
@@ -39,6 +46,8 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     // HTTPs,
     // along with Basic Auth being used.
     private boolean disableSecurity = true;
+    private boolean requireInitialPassword = false;
+    private String password = DEFAULT_PASSWORD;
 
     /**
      * Create an Opensearch Container by passing the full docker image name.
@@ -65,6 +74,14 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     public OpensearchContainer(final DockerImageName dockerImageName) {
         super(dockerImageName);
         dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
+
+        final String version = dockerImageName.getVersionPart();
+        if (version == null || version.isBlank()) {
+            requireInitialPassword = false; /* we don't know the version */
+        } else {
+            requireInitialPassword =
+                    OPENSEARCH_INITIAL_PASSWORD_VERSION.matcher(version).matches();
+        }
     }
 
     /**
@@ -85,6 +102,13 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
         withEnv("discovery.type", "single-node");
         if (disableSecurity) {
             withEnv("DISABLE_SECURITY_PLUGIN", Boolean.toString(disableSecurity));
+        } else if (requireInitialPassword) {
+            // Check if the OPENSEARCH_INITIAL_ADMIN_PASSWORD is already provided
+            password = getEnvMap().get("OPENSEARCH_INITIAL_ADMIN_PASSWORD");
+            if (password == null || password.isBlank()) {
+                withEnv("OPENSEARCH_INITIAL_ADMIN_PASSWORD", DEFAULT_INITIAL_PASSWORD);
+                password = DEFAULT_INITIAL_PASSWORD;
+            }
         }
         addExposedPorts(DEFAULT_HTTP_PORT, DEFAULT_TCP_PORT);
 
@@ -96,7 +120,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
                     .usingTls()
                     .allowInsecure()
                     .forPort(DEFAULT_HTTP_PORT)
-                    .withBasicCredentials(DEFAULT_USER, DEFAULT_PASSWORD)
+                    .withBasicCredentials(DEFAULT_USER, password)
                     .forStatusCodeMatching(response -> response == HTTP_OK || response == HTTP_UNAUTHORIZED)
                     .withReadTimeout(Duration.ofSeconds(10))
                     .withStartupTimeout(Duration.ofMinutes(5));
@@ -153,6 +177,6 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
      * @return password to connect to Opensearch container
      */
     public String getPassword() {
-        return DEFAULT_PASSWORD;
+        return password;
     }
 }

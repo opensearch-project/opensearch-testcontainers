@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThrows;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 import javax.net.ssl.SSLContext;
@@ -38,8 +39,10 @@ class OpensearchContainerTest {
     @DisplayName("Create default OpensearchContainer with security enabled")
     @ParameterizedTest(name = "Running Opensearch version={0} (security enabled)")
     @MethodSource("containers")
-    public void defaultWithSecurity(final String version, final DockerImageName image) throws Exception {
-        try (OpensearchContainer<?> container = new OpensearchContainer<>(image).withSecurityEnabled()) {
+    public void defaultWithSecurity(final String version, final Map<String, String> env, final DockerImageName image)
+            throws Exception {
+        try (OpensearchContainer<?> container =
+                new OpensearchContainer<>(image).withEnv(env).withSecurityEnabled()) {
             container.start();
 
             try (RestClient client = getClient(container)) {
@@ -59,8 +62,9 @@ class OpensearchContainerTest {
     @DisplayName("Create OpensearchContainer with security disabled")
     @ParameterizedTest(name = "Running Opensearch version={0} (security disabled)")
     @MethodSource("containers")
-    public void defaultNoSecurity(final String version, final DockerImageName image) throws Exception {
-        try (OpensearchContainer<?> container = new OpensearchContainer<>(image)) {
+    public void defaultNoSecurity(final String version, final Map<String, String> env, final DockerImageName image)
+            throws Exception {
+        try (OpensearchContainer<?> container = new OpensearchContainer<>(image).withEnv(env)) {
             container.start();
 
             try (RestClient client = getClient(container)) {
@@ -81,16 +85,28 @@ class OpensearchContainerTest {
         return Stream.of(
                 Arguments.of(
                         "1.3.4",
+                        Map.of(), /* empty env */
                         DockerImageName.parse("opensearchproject/opensearch").withTag("1.3.4")),
                 Arguments.of(
                         "2.0.1",
+                        Map.of(), /* empty env */
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.0.1")),
                 Arguments.of(
                         "2.1.0",
+                        Map.of(), /* empty env */
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.1.0")),
                 Arguments.of(
                         "2.11.0",
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.11.0")));
+                        Map.of(), /* empty env */
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.11.0")),
+                Arguments.of(
+                        "2.15.0",
+                        Map.of("OPENSEARCH_INITIAL_ADMIN_PASSWORD", "_oop0m#NsR_"),
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.15.0")),
+                Arguments.of(
+                        "2.17.0",
+                        Map.of(), /* empty env */
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.17.0")));
     }
 
     private RestClient getClient(OpensearchContainer<?> container)
