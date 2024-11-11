@@ -46,7 +46,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
   testImplementation("ch.qos.logback:logback-classic:1.5.12")
-  testImplementation("org.opensearch.client:opensearch-rest-client:2.17.1")
+  testImplementation("org.opensearch.client:opensearch-rest-client:2.18.0")
 }
 
 group = "org.opensearch"
