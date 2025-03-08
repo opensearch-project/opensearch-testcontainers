@@ -45,7 +45,7 @@ dependencies {
   implementation("org.testcontainers:testcontainers:1.20.5") 
   testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.4")
-  testImplementation("ch.qos.logback:logback-classic:1.5.16")
+  testImplementation("ch.qos.logback:logback-classic:1.5.17")
   testImplementation("org.opensearch.client:opensearch-rest-client:2.19.1")
 }
 
