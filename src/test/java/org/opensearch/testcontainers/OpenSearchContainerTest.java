@@ -35,14 +35,14 @@ import org.opensearch.client.ResponseException;
 import org.opensearch.client.RestClient;
 import org.testcontainers.utility.DockerImageName;
 
-class OpensearchContainerTest {
-    @DisplayName("Create default OpensearchContainer with security enabled")
-    @ParameterizedTest(name = "Running Opensearch version={0} (security enabled)")
+class OpenSearchContainerTest {
+    @DisplayName("Create default OpenSearchContainer with security enabled")
+    @ParameterizedTest(name = "Running OpenSearch version={0} (security enabled)")
     @MethodSource("containers")
     public void defaultWithSecurity(final String version, final Map<String, String> env, final DockerImageName image)
             throws Exception {
-        try (OpensearchContainer<?> container =
-                new OpensearchContainer<>(image).withEnv(env).withSecurityEnabled()) {
+        try (OpenSearchContainer<?> container =
+                new OpenSearchContainer<>(image).withEnv(env).withSecurityEnabled()) {
             container.start();
 
             try (RestClient client = getClient(container)) {
@@ -59,12 +59,12 @@ class OpensearchContainerTest {
         }
     }
 
-    @DisplayName("Create OpensearchContainer with security disabled")
-    @ParameterizedTest(name = "Running Opensearch version={0} (security disabled)")
+    @DisplayName("Create OpenSearchContainer with security disabled")
+    @ParameterizedTest(name = "Running OpenSearch version={0} (security disabled)")
     @MethodSource("containers")
     public void defaultNoSecurity(final String version, final Map<String, String> env, final DockerImageName image)
             throws Exception {
-        try (OpensearchContainer<?> container = new OpensearchContainer<>(image).withEnv(env)) {
+        try (OpenSearchContainer<?> container = new OpenSearchContainer<>(image).withEnv(env)) {
             container.start();
 
             try (RestClient client = getClient(container)) {
@@ -106,10 +106,14 @@ class OpensearchContainerTest {
                 Arguments.of(
                         "2.17.0",
                         Map.of(), /* empty env */
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.17.0")));
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.17.0")),
+                Arguments.of(
+                        "2.19.1",
+                        Map.of(), /* empty env */
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.19.1")));
     }
 
-    private RestClient getClient(OpensearchContainer<?> container)
+    private RestClient getClient(OpenSearchContainer<?> container)
             throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
         final CredentialsProvider credentialsProvider =
                 getCredentialsProvider(container).orElse(null);
@@ -127,7 +131,7 @@ class OpensearchContainerTest {
                 .build();
     }
 
-    private Optional<CredentialsProvider> getCredentialsProvider(OpensearchContainer<?> container) {
+    private Optional<CredentialsProvider> getCredentialsProvider(OpenSearchContainer<?> container) {
         if (!container.isSecurityEnabled()) {
             return Optional.empty();
         }
