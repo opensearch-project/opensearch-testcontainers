@@ -6,6 +6,7 @@ This document contains a list of maintainers in this repo. See [opensearch-proje
 
 | Maintainer   | GitHub ID                                           | Affiliation |
 | ------------ | --------------------------------------------------- | ----------- |
+| Andrew Ross  | [andrross](https://github.com/andrross)             | Amazon      |
 | Andriy Redko | [reta](https://github.com/reta)                     | Independent |
 | Peter Zhu    | [peterzhuamazon](https://github.com/peterzhuamazon) | Amazon      |
 
