@@ -10,6 +10,7 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 
 |opensearch-testcontainers|OpenSearch|testcontainers|JDK|
 |---|---|---|---|
+|3.0.0-SNAPSHOT|2.0.0+|1.20.0+|21+|
 |2.1.4-SNAPSHOT|2.0.0+|1.20.0+|11+|
 |2.1.3|2.0.0+|1.20.0+|11+|
 |2.1.2|2.0.0+|1.20.0+|11+|
@@ -41,7 +42,7 @@ Follow the [JUnit 4 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Rule
-public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
+public OpenSearchContainer<?> opensearch = new OpenSearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
 
 ```
 
@@ -51,7 +52,7 @@ Follow the [JUnit 5 Quickstart](https://www.testcontainers.org/quickstart/junit_
 
 ```java
 @Container
-public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
+public OpenSearchContainer<?> opensearch = new OpenSearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.11.0"));
 
 ```
 
@@ -59,7 +60,7 @@ Please note that at the moment [testcontainers](https://www.testcontainers.org/)
 
 ## Usage Examples
 
-By default, [OpenSearch](https://opensearch.org/) Docker containers run with [security plugin](https://github.com/opensearch-project/security) activated, however `OpensearchContainer` deactivates it. Use `withSecurityEnabled()` to enable security, please notice that in this case in order to connect to the running container the HTTPS protocol should be used along with username / password credentials.
+By default, [OpenSearch](https://opensearch.org/) Docker containers run with [security plugin](https://github.com/opensearch-project/security) activated, however `OpenSearchContainer` deactivates it. Use `withSecurityEnabled()` to enable security, please notice that in this case in order to connect to the running container the HTTPS protocol should be used along with username / password credentials.
 
 ```java
 
@@ -78,7 +79,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.11.0");
 
 // Create the Opensearch container.
-try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE).withSecurityEnabled()) {
+try (OpenSearchContainer<?> container = new OpenSearchContainer<>(OPENSEARCH_IMAGE).withSecurityEnabled()) {
     // Start the container. This step might take some time...
     container.start();
 
@@ -109,7 +110,7 @@ try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMA
 }
 ```
 
-When [security plugin](https://github.com/opensearch-project/security) is not required (not recommended for production), just use `OpensearchContainer` default constructor.
+When [security plugin](https://github.com/opensearch-project/security) is not required (not recommended for production), just use `OpenSearchContainer` default constructor.
 
 ```java
 
@@ -121,7 +122,7 @@ import org.opensearch.client.RestClient;
 private static final DockerImageName OPENSEARCH_IMAGE = DockerImageName.parse("opensearchproject/opensearch:2.11.0");
 
 // Create the OpenSearch container.
-try (OpensearchContainer<?> container = new OpensearchContainer<>(OPENSEARCH_IMAGE)) {
+try (OpenSearchContainer<?> container = new OpenSearchContainer<>(OPENSEARCH_IMAGE)) {
     // Start the container. This step might take some time...
     container.start();
 

@@ -18,19 +18,19 @@ import org.testcontainers.utility.Base58;
 import org.testcontainers.utility.DockerImageName;
 
 /**
- * The Opensearch Docker container (single node cluster) which exposes by default ports 9200
+ * The OpenSearch Docker container (single node cluster) which exposes by default ports 9200
  * (http/https) and 9300 (tcp, deprecated).
  */
-public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends GenericContainer<SELF> {
+public class OpenSearchContainer<SELF extends OpenSearchContainer<SELF>> extends GenericContainer<SELF> {
     // The initial password is required starting from OpenSearch 2.12.0
     private static final Pattern OPENSEARCH_INITIAL_PASSWORD_VERSION = Pattern.compile(
             "^(([3-9][.]\\d+[.]\\d+|[2][.][1][2-9]+[.]\\d+|[2][.][2-9]\\d+[.]\\d+)(-SNAPSHOT)?|latest)$");
 
-    // Default username to connect to Opensearch instance
+    // Default username to connect to OpenSearch instance
     private static final String DEFAULT_USER = "admin";
-    // Default password to connect to Opensearch instance
+    // Default password to connect to OpenSearch instance
     private static final String DEFAULT_PASSWORD = "admin";
-    // Default initial password to connect to Opensearch instance
+    // Default initial password to connect to OpenSearch instance
     private static final String DEFAULT_INITIAL_PASSWORD = "_ad0m#Ns_";
 
     // Default HTTP port.
@@ -39,7 +39,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     // Default TCP port (deprecated and may be removed in future versions).
     private static final int DEFAULT_TCP_PORT = 9300;
 
-    // Opensearch Docker base image.
+    // OpenSearch Docker base image.
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("opensearchproject/opensearch");
 
     // Disables (or enables) security plugin. If security is enabled, the communication protocol switches from HTTP to
@@ -50,18 +50,18 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     private String password = DEFAULT_PASSWORD;
 
     /**
-     * Create an Opensearch Container by passing the full docker image name.
+     * Create an OpenSearch Container by passing the full docker image name.
      *
      * @param dockerImageName Full docker image name as a {@link String}, like:
      *     opensearchproject/opensearch:1.2.4 opensearchproject/opensearch:1.3.1
      *     opensearchproject/opensearch:2.0.0
      */
-    public OpensearchContainer(String dockerImageName) {
+    public OpenSearchContainer(String dockerImageName) {
         this(DockerImageName.parse(dockerImageName));
     }
 
     /**
-     * Create an Opensearch Container (with security plugin enabled) by passing the full docker image
+     * Create an OpenSearch Container (with security plugin enabled) by passing the full docker image
      * name.
      *
      * @param dockerImageName Full docker image name as a {@link DockerImageName}, like:
@@ -71,7 +71,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
      *      DockerImageName.parse("opensearchproject/opensearch:2.0.0")
      *
      */
-    public OpensearchContainer(final DockerImageName dockerImageName) {
+    public OpenSearchContainer(final DockerImageName dockerImageName) {
         super(dockerImageName);
         dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
 
@@ -114,7 +114,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
 
         final WaitStrategy waitStrategy;
         if (!disableSecurity) {
-            // By default, Opensearch uses self-signed certificates for HTTPS, allowing insecure
+            // By default, OpenSearch uses self-signed certificates for HTTPS, allowing insecure
             // connection in order to skip the certificate validation checks.
             waitStrategy = new HttpWaitStrategy()
                     .usingTls()
@@ -136,7 +136,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     }
 
     /**
-     * Return HTTP(s) host and port to connect to Opensearch container.
+     * Return HTTP(s) host and port to connect to OpenSearch container.
      *
      * @return HTTP(s) host and port (in a form of "host:port")
      */
@@ -154,7 +154,7 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     }
 
     /**
-     * Return socket address to connect to Opensearch over TCP. The TransportClient will is deprecated
+     * Return socket address to connect to OpenSearch over TCP. The TransportClient will is deprecated
      * and may be removed in future versions.
      *
      * @return TCP socket address
@@ -165,16 +165,16 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
     }
 
     /**
-     * Return user name to connect to Opensearch container (if security plugin is enabled)
-     * @return user name to connect to Opensearch container
+     * Return user name to connect to OpenSearch container (if security plugin is enabled)
+     * @return user name to connect to OpenSearch container
      */
     public String getUsername() {
         return DEFAULT_USER;
     }
 
     /**
-     * Return password to connect to Opensearch container (if security plugin is enabled)
-     * @return password to connect to Opensearch container
+     * Return password to connect to OpenSearch container (if security plugin is enabled)
+     * @return password to connect to OpenSearch container
      */
     public String getPassword() {
         return password;
