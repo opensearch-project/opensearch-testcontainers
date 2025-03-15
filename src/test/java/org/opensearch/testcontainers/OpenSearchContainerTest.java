@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -17,14 +18,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 import javax.net.ssl.SSLContext;
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.conn.ssl.TrustAllStrategy;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.CredentialsProvider;
+import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
+import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
+import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
+import org.apache.hc.client5.http.ssl.TrustAllStrategy;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
+import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -114,31 +119,42 @@ class OpenSearchContainerTest {
     }
 
     private RestClient getClient(OpenSearchContainer<?> container)
-            throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+            throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, URISyntaxException {
+        final HttpHost host = HttpHost.create(container.getHttpHostAddress());
+
         final CredentialsProvider credentialsProvider =
-                getCredentialsProvider(container).orElse(null);
+                getCredentialsProvider(container, host).orElse(null);
 
         final SSLContext sslcontext = SSLContextBuilder.create()
                 .loadTrustMaterial(null, new TrustAllStrategy())
                 .build();
 
-        return RestClient.builder(HttpHost.create(container.getHttpHostAddress()))
+        return RestClient.builder(host)
                 .setHttpClientConfigCallback(httpClientBuilder -> {
+                    final TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create()
+                            .setSslContext(sslcontext)
+                            .build();
+                    final PoolingAsyncClientConnectionManager connectionManager =
+                            PoolingAsyncClientConnectionManagerBuilder.create()
+                                    .setTlsStrategy(tlsStrategy)
+                                    .build();
                     return httpClientBuilder
-                            .setSSLContext(sslcontext)
+                            .setConnectionManager(connectionManager)
                             .setDefaultCredentialsProvider(credentialsProvider);
                 })
                 .build();
     }
 
-    private Optional<CredentialsProvider> getCredentialsProvider(OpenSearchContainer<?> container) {
+    private Optional<CredentialsProvider> getCredentialsProvider(OpenSearchContainer<?> container, HttpHost host) {
         if (!container.isSecurityEnabled()) {
             return Optional.empty();
         }
 
-        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        final BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(
-                AuthScope.ANY, new UsernamePasswordCredentials(container.getUsername(), container.getPassword()));
+                new AuthScope(host),
+                new UsernamePasswordCredentials(
+                        container.getUsername(), container.getPassword().toCharArray()));
 
         return Optional.of(credentialsProvider);
     }
