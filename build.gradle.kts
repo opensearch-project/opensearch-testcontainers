@@ -39,6 +39,9 @@ repositories {
   maven {
     url = uri("https://repo.maven.apache.org/maven2/")
   }
+  maven {
+    url = uri("https://aws.oss.sonatype.org/content/repositories/snapshots/")
+  }
 }
 
 dependencies {
@@ -47,7 +50,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation("ch.qos.logback:logback-classic:1.5.17")
-  testImplementation("org.opensearch.client:opensearch-rest-client:2.19.1")
+  testImplementation("org.opensearch.client:opensearch-rest-client:3.0.0-alpha1-SNAPSHOT")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -73,9 +76,11 @@ if (!buildVersion.equals(tagVersion)) {
 
 version = buildVersion 
 description = "Testcontainers for Opensearch"
-java.sourceCompatibility = JavaVersion.VERSION_11
 
 java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+
   withSourcesJar()
   withJavadocJar()
 }
