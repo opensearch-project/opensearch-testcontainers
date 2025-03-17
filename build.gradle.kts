@@ -46,7 +46,7 @@ repositories {
 
 dependencies {
   implementation("org.testcontainers:testcontainers:1.20.6")
-  testImplementation(platform("org.junit:junit-bom:5.12.0")) 
+  testImplementation(platform("org.junit:junit-bom:5.12.1")) 
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation("ch.qos.logback:logback-classic:1.5.17")
