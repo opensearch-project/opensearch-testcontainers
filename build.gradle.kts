@@ -49,7 +49,7 @@ dependencies {
   testImplementation(platform("org.junit:junit-bom:5.12.1")) 
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
-  testImplementation("ch.qos.logback:logback-classic:1.5.17")
+  testImplementation("ch.qos.logback:logback-classic:1.5.18")
   testImplementation("org.opensearch.client:opensearch-rest-client:3.0.0-alpha1-SNAPSHOT")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
