@@ -24,7 +24,7 @@ import org.testcontainers.utility.DockerImageName;
 public class OpenSearchContainer<SELF extends OpenSearchContainer<SELF>> extends GenericContainer<SELF> {
     // The initial password is required starting from OpenSearch 2.12.0
     private static final Pattern OPENSEARCH_INITIAL_PASSWORD_VERSION = Pattern.compile(
-            "^(([3-9][.]\\d+[.]\\d+|[2][.][1][2-9]+[.]\\d+|[2][.][2-9]\\d+[.]\\d+)(-SNAPSHOT)?|latest)$");
+            "^(([3-9][.]\\d+[.]\\d+|[2][.][1][2-9]+[.]\\d+|[2][.][2-9]\\d+[.]\\d+)(-SNAPSHOT|-beta\\d+|-alpha\\d+)?|-latest)$");
 
     // Default username to connect to OpenSearch instance
     private static final String DEFAULT_USER = "admin";
