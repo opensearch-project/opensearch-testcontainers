@@ -6,6 +6,7 @@ on:
       branches:
         - main
         - 1.x
+        - 2.x
 
 jobs:
   build-and-publish-snapshots:
@@ -23,11 +24,15 @@ jobs:
           distribution: adopt
           java-version: 11
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Load secret
+        uses: 1password/load-secrets-action@v2
         with:
-          role-to-assume: ${{ secrets.PUBLISH_SNAPSHOTS_ROLE }}
-          aws-region: us-east-1
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SONATYPE_USERNAME: op://opensearch-infra-secrets/maven-central-portal-credentials/username
+          SONATYPE_PASSWORD: op://opensearch-infra-secrets/maven-central-portal-credentials/password
 
       - name: Publish snapshots to maven
         run: |
