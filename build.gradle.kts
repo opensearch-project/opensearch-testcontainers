@@ -40,13 +40,16 @@ repositories {
     url = uri("https://repo.maven.apache.org/maven2/")
   }
   maven {
+    url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+  }
+  maven {
     url = uri("https://aws.oss.sonatype.org/content/repositories/snapshots/")
   }
 }
 
 dependencies {
   implementation("org.testcontainers:testcontainers:1.21.1")
-  testImplementation(platform("org.junit:junit-bom:5.13.1")) 
+  testImplementation(platform("org.junit:junit-bom:5.13.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation("ch.qos.logback:logback-classic:1.5.18")
@@ -67,14 +70,14 @@ if (isSnapshot && !buildVersion.endsWith("SNAPSHOT")) {
 } else if (!isSnapshot && buildVersion.endsWith("SNAPSHOT")) {
   throw GradleException("Expecting release (non-SNAPSHOT) build but version is not set accordingly: " + buildVersion)
 }
-  
-// Check if tag release version (if provided) matches the version from build settings 
+
+// Check if tag release version (if provided) matches the version from build settings
 val tagVersion = System.getProperty("build.version", buildVersion)
 if (!buildVersion.equals(tagVersion)) {
   throw GradleException("The tagged version " + tagVersion + " does not match the build version " + buildVersion)
 }
 
-version = buildVersion 
+version = buildVersion
 description = "Testcontainers for Opensearch"
 
 java {
@@ -125,7 +128,7 @@ configure<ReleaseExtension> {
 publishing {
   repositories{
     if (version.toString().endsWith("SNAPSHOT")) {
-      maven("https://aws.oss.sonatype.org/content/repositories/snapshots/") {
+      maven("https://central.sonatype.com/repository/maven-snapshots/") {
         name = "snapshotRepo"
         credentials {
             username = System.getenv("SONATYPE_USERNAME")
