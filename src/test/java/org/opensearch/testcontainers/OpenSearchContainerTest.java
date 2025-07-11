@@ -117,9 +117,9 @@ class OpenSearchContainerTest {
                         Map.of(), /* empty env */
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.19.1")),
                 Arguments.of(
-                        "3.0.0-beta1",
+                        "3.1.0",
                         Map.of(), /* empty env */
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("3.0.0-beta1")));
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")));
     }
 
     private RestClient getClient(OpenSearchContainer<?> container)
