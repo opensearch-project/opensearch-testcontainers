@@ -99,7 +99,9 @@ public class OpensearchContainer<SELF extends OpensearchContainer<SELF>> extends
         super.configure();
 
         withNetworkAliases("opensearch-" + Base58.randomString(6));
-        withEnv("discovery.type", "single-node");
+        if (!getEnvMap().containsKey("discovery.type")) {
+            withEnv("discovery.type", "single-node");
+        }
         if (disableSecurity) {
             withEnv("DISABLE_SECURITY_PLUGIN", Boolean.toString(disableSecurity));
         } else if (requireInitialPassword) {
