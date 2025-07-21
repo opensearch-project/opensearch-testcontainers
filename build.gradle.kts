@@ -14,7 +14,7 @@ plugins {
   eclipse
   idea
   id("org.ec4j.editorconfig") version "0.0.3"
-  id("com.diffplug.spotless") version "7.1.0"
+  id("com.diffplug.spotless") version "7.2.1"
 }
 
 buildscript {
@@ -25,7 +25,7 @@ buildscript {
   }
   dependencies {
     classpath("gradle.plugin.org.ec4j.gradle:editorconfig-gradle-plugin:0.0.3")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:7.1.0")
+    classpath("com.diffplug.spotless:spotless-plugin-gradle:7.2.1")
     classpath("net.researchgate:gradle-release:3.1.0")
   }
 }
