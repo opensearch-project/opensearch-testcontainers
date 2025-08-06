@@ -21,6 +21,7 @@ import javax.net.ssl.SSLContext;
 import org.apache.hc.client5.http.auth.AuthScope;
 import org.apache.hc.client5.http.auth.CredentialsProvider;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.config.TlsConfig;
 import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
@@ -29,6 +30,7 @@ import org.apache.hc.client5.http.ssl.TrustAllStrategy;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
+import org.apache.hc.core5.http2.HttpVersionPolicy;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,13 +46,17 @@ class OpenSearchContainerTest {
     @DisplayName("Create default OpenSearchContainer with security enabled")
     @ParameterizedTest(name = "Running OpenSearch version={0} (security enabled)")
     @MethodSource("containers")
-    public void defaultWithSecurity(final String version, final Map<String, String> env, final DockerImageName image)
+    public void defaultWithSecurity(
+            final String version,
+            final Map<String, String> env,
+            final TlsConfig.Builder tlsConfig,
+            final DockerImageName image)
             throws Exception {
         try (OpenSearchContainer<?> container =
                 new OpenSearchContainer<>(image).withEnv(env).withSecurityEnabled()) {
             container.start();
 
-            try (RestClient client = getClient(container)) {
+            try (RestClient client = getClient(container, tlsConfig)) {
                 Response response = client.performRequest(new Request("GET", "/"));
 
                 assertThat(response.getStatusLine().getStatusCode(), is(200));
@@ -67,12 +73,16 @@ class OpenSearchContainerTest {
     @DisplayName("Create OpenSearchContainer with security disabled")
     @ParameterizedTest(name = "Running OpenSearch version={0} (security disabled)")
     @MethodSource("containers")
-    public void defaultNoSecurity(final String version, final Map<String, String> env, final DockerImageName image)
+    public void defaultNoSecurity(
+            final String version,
+            final Map<String, String> env,
+            final TlsConfig.Builder tlsConfig,
+            final DockerImageName image)
             throws Exception {
         try (OpenSearchContainer<?> container = new OpenSearchContainer<>(image).withEnv(env)) {
             container.start();
 
-            try (RestClient client = getClient(container)) {
+            try (RestClient client = getClient(container, tlsConfig)) {
                 Response response = client.performRequest(new Request("GET", "/"));
 
                 assertThat(response.getStatusLine().getStatusCode(), is(200));
@@ -91,38 +101,51 @@ class OpenSearchContainerTest {
                 Arguments.of(
                         "1.3.4",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("1.3.4")),
                 Arguments.of(
                         "2.0.1",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.0.1")),
                 Arguments.of(
                         "2.1.0",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.1.0")),
                 Arguments.of(
                         "2.11.0",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.11.0")),
                 Arguments.of(
                         "2.15.0",
                         Map.of("OPENSEARCH_INITIAL_ADMIN_PASSWORD", "_oop0m#NsR_"),
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.15.0")),
                 Arguments.of(
                         "2.17.0",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.17.0")),
                 Arguments.of(
                         "2.19.1",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("2.19.1")),
                 Arguments.of(
                         "3.1.0",
                         Map.of(), /* empty env */
+                        TlsConfig.custom(),
+                        DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")),
+                Arguments.of(
+                        "3.1.0",
+                        Map.of(), /* empty env */
+                        TlsConfig.custom().setVersionPolicy(HttpVersionPolicy.FORCE_HTTP_2),
                         DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")));
     }
 
-    private RestClient getClient(OpenSearchContainer<?> container)
+    private RestClient getClient(OpenSearchContainer<?> container, final TlsConfig.Builder tlsConfig)
             throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, URISyntaxException {
         final HttpHost host = HttpHost.create(container.getHttpHostAddress());
 
@@ -141,6 +164,7 @@ class OpenSearchContainerTest {
                     final PoolingAsyncClientConnectionManager connectionManager =
                             PoolingAsyncClientConnectionManagerBuilder.create()
                                     .setTlsStrategy(tlsStrategy)
+                                    .setDefaultTlsConfig(tlsConfig.build())
                                     .build();
                     return httpClientBuilder
                             .setConnectionManager(connectionManager)
