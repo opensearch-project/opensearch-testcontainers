@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java-version: [ 21, 24 ]
+        java-version: [ 21, 25 ]
         runs-on: [ubuntu-latest]
     name: Build on ${{ matrix.runs-on }} with jdk ${{ matrix.java-version }}
     runs-on: ${{ matrix.runs-on }}
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: 'temurin'
+          distribution: 'oracle'
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew clean check
