@@ -114,7 +114,7 @@ spotless {
 
     removeUnusedImports()
     importOrder()
-    palantirJavaFormat()
+    palantirJavaFormat("2.74.0")
   }
 }
 
