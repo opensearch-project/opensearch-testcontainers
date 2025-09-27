@@ -62,7 +62,10 @@ public class OpenSearchContainer<SELF extends OpenSearchContainer<SELF>> extends
 
     /**
      * Create an OpenSearch Container (with security plugin enabled) by passing the full docker image
-     * name.
+     * name. {@link OpenSearchDockerImage} helper class could be used to refer to the official images
+     * by version tag only:
+     *
+     *      OpenSearchDockerImage.ofVersion("1.2.4")
      *
      * @param dockerImageName Full docker image name as a {@link DockerImageName}, like:
      *

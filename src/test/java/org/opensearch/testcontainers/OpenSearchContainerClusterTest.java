@@ -141,7 +141,7 @@ class OpenSearchContainerClusterTest {
                         "master",
                         "node.name",
                         "master"),
-                DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")));
+                OpenSearchDockerImage.ofVersion("3.1.0")));
     }
 
     private RestClient getClient(OpenSearchContainer<?> container)
