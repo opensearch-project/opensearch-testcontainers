@@ -102,47 +102,47 @@ class OpenSearchContainerTest {
                         "1.3.4",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("1.3.4")),
+                        OpenSearchDockerImage.ofVersion("1.3.4")),
                 Arguments.of(
                         "2.0.1",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.0.1")),
+                        OpenSearchDockerImage.ofVersion("2.0.1")),
                 Arguments.of(
                         "2.1.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.1.0")),
+                        OpenSearchDockerImage.ofVersion("2.1.0")),
                 Arguments.of(
                         "2.11.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.11.0")),
+                        OpenSearchDockerImage.ofVersion("2.11.0")),
                 Arguments.of(
                         "2.15.0",
                         Map.of("OPENSEARCH_INITIAL_ADMIN_PASSWORD", "_oop0m#NsR_"),
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.15.0")),
+                        OpenSearchDockerImage.ofVersion("2.15.0")),
                 Arguments.of(
                         "2.17.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.17.0")),
+                        OpenSearchDockerImage.ofVersion("2.17.0")),
                 Arguments.of(
                         "2.19.1",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("2.19.1")),
+                        OpenSearchDockerImage.ofVersion("2.19.1")),
                 Arguments.of(
                         "3.1.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")),
+                        OpenSearchDockerImage.ofVersion("3.1.0")),
                 Arguments.of(
-                        "3.1.0",
+                        "3.2.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom().setVersionPolicy(HttpVersionPolicy.FORCE_HTTP_2),
-                        DockerImageName.parse("opensearchproject/opensearch").withTag("3.1.0")));
+                        OpenSearchDockerImage.ofVersion("3.2.0")));
     }
 
     private RestClient getClient(OpenSearchContainer<?> container, final TlsConfig.Builder tlsConfig)
