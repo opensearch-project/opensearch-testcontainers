@@ -139,10 +139,10 @@ class OpenSearchContainerTest {
                         TlsConfig.custom(),
                         OpenSearchDockerImage.ofVersion("3.1.0")),
                 Arguments.of(
-                        "3.2.0",
+                        "3.3.0",
                         Map.of(), /* empty env */
                         TlsConfig.custom().setVersionPolicy(HttpVersionPolicy.FORCE_HTTP_2),
-                        OpenSearchDockerImage.ofVersion("3.2.0")));
+                        OpenSearchDockerImage.ofVersion("3.3.0")));
     }
 
     private RestClient getClient(OpenSearchContainer<?> container, final TlsConfig.Builder tlsConfig)
