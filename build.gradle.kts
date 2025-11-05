@@ -40,10 +40,7 @@ repositories {
     url = uri("https://repo.maven.apache.org/maven2/")
   }
   maven {
-    url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-  }
-  maven {
-    url = uri("https://aws.oss.sonatype.org/content/repositories/snapshots/")
+    url = uri("https://ci.opensearch.org/ci/dbc/snapshots/maven/")
   }
 }
 
@@ -129,11 +126,11 @@ configure<ReleaseExtension> {
 publishing {
   repositories{
     if (version.toString().endsWith("SNAPSHOT")) {
-      maven("https://central.sonatype.com/repository/maven-snapshots/") {
-        name = "snapshotRepo"
-        credentials {
-            username = System.getenv("SONATYPE_USERNAME")
-            password = System.getenv("SONATYPE_PASSWORD")
+      maven(providers.environmentVariable("MAVEN_SNAPSHOTS_S3_REPO")) {
+        credentials(AwsCredentials::class) {
+          accessKey = System.getenv("AWS_ACCESS_KEY_ID")
+          secretKey = System.getenv("AWS_SECRET_ACCESS_KEY")
+          sessionToken = System.getenv("AWS_SESSION_TOKEN")
         }
       }
     }
