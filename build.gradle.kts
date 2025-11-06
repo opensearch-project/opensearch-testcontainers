@@ -127,6 +127,7 @@ publishing {
   repositories{
     if (version.toString().endsWith("SNAPSHOT")) {
       maven(providers.environmentVariable("MAVEN_SNAPSHOTS_S3_REPO")) {
+        name = "snapshotRepo"
         credentials(AwsCredentials::class) {
           accessKey = System.getenv("AWS_ACCESS_KEY_ID")
           secretKey = System.getenv("AWS_SECRET_ACCESS_KEY")
