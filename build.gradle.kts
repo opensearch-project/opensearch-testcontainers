@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-  implementation("org.testcontainers:testcontainers:2.0.1")
+  implementation("org.testcontainers:testcontainers:2.0.2")
   testImplementation(platform("org.junit:junit-bom:6.0.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
