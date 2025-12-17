@@ -45,12 +45,12 @@ repositories {
 }
 
 dependencies {
-  implementation("org.testcontainers:testcontainers:2.0.2")
+  implementation("org.testcontainers:testcontainers:2.0.3")
   testImplementation(platform("org.junit:junit-bom:6.0.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation("ch.qos.logback:logback-classic:1.5.22")
-  testImplementation("org.opensearch.client:opensearch-rest-client:3.3.2")
+  testImplementation("org.opensearch.client:opensearch-rest-client:3.4.0")
   testImplementation("org.hamcrest:hamcrest:3.0")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
