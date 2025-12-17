@@ -10,6 +10,7 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 
 |opensearch-testcontainers|OpenSearch|testcontainers|JDK|
 |---|---|---|---|
+|4.1.0-SNAPSHOT|2.x / 3.x|2.0.0+|17+|
 |4.0.2-SNAPSHOT|2.x / 3.x|2.0.0+|21+|
 |4.0.1|2.x / 3.x|2.0.0+|21+|
 |4.0.0|2.x / 3.x|2.0.0+|21+|
@@ -34,7 +35,7 @@ The [opensearch-testcontainers](https://github.com/opensearch-project/opensearch
 <dependency>
     <groupId>org.opensearch</groupId>
     <artifactId>opensearch-testcontainers</artifactId>
-    <version>4.0.1</version>
+    <version>4.1.0</version>
     <scope>test</scope>
 </dependency>
 ```
