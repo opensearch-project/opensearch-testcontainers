@@ -104,15 +104,10 @@ class OpenSearchContainerTest {
                         TlsConfig.custom(),
                         OpenSearchDockerImage.ofVersion("1.3.4")),
                 Arguments.of(
-                        "2.0.1",
+                        "2.4.1",
                         Map.of(), /* empty env */
                         TlsConfig.custom(),
-                        OpenSearchDockerImage.ofVersion("2.0.1")),
-                Arguments.of(
-                        "2.1.0",
-                        Map.of(), /* empty env */
-                        TlsConfig.custom(),
-                        OpenSearchDockerImage.ofVersion("2.1.0")),
+                        OpenSearchDockerImage.ofVersion("2.4.1")),
                 Arguments.of(
                         "2.11.0",
                         Map.of(), /* empty env */
