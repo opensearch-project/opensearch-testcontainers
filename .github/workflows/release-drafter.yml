@@ -10,6 +10,9 @@ jobs:
   draft-a-release:
     name: Draft a release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
     steps:
       - name: Checkout code
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
@@ -35,9 +38,9 @@ jobs:
         run: |
           ./gradlew --no-daemon -Dbuild.snapshot=false publishPublishMavenPublicationToLocalRepoRepository && tar -C build -cvf artifacts.tar.gz repository
       - name: Draft a release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd
         with:
-          draft: true
-          generate_release_notes: true
-          files: |
-            artifacts.tar.gz
+          immutableCreate: true
+          generateReleaseNotes: true
+          artifacts: "artifacts.tar.gz"
+          prerelease: true
